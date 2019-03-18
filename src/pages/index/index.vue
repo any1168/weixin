@@ -28,51 +28,23 @@
        <image :src="item.image_src" mode="aspectfill"></image>
       </block>
     </view>
+
+    <block v-for="(item,index) in cate" :key="index">
     <!-- 时尚女装 -->
     <view class='divide'></view>
-      <image src="https://lg-igjc8p1o-1256763078.cos.ap-shanghai.myqcloud.com/upload/pic_floor01_title.png" mode="aspectfill" class="pyg_Vogue"></image>
+      <image :src="item.floor_title.image_src" mode="aspectfill" class="pyg_Vogue"></image>
     <!-- 时尚女装内容 -->
     <view class='costume'>
       <view class='costume_left'>
-        <image src="https://lg-igjc8p1o-1256763078.cos.ap-shanghai.myqcloud.com/upload/pic_floor01_1@2x.png" mode="aspectfill"></image>
+        <image :src="item.product_list[0].image_src" mode="aspectfill"></image>
       </view>
       <view class='costume_right'>
-        <image src="https://lg-igjc8p1o-1256763078.cos.ap-shanghai.myqcloud.com/upload/pic_floor01_2@2x.png" mode="aspectfill"></image>
-        <image src="https://lg-igjc8p1o-1256763078.cos.ap-shanghai.myqcloud.com/upload/pic_floor01_3@2x.png" mode="aspectfill"></image>
-        <image src="https://lg-igjc8p1o-1256763078.cos.ap-shanghai.myqcloud.com/upload/pic_floor01_4@2x.png" mode="aspectfill"></image>
-        <image src="https://lg-igjc8p1o-1256763078.cos.ap-shanghai.myqcloud.com/upload/pic_floor01_5@2x.png" mode="aspectfill"></image>
+        <block v-for="(item2,index2) in item.product_list" :key="index2">
+        <image v-if="index2 !== 0" :src="item2.image_src" mode="aspectfill"></image>
+        </block>
       </view>
-    </view>
-      <!-- 户外运动 -->
-    <view class='divide'></view>
-      <image src="https://lg-igjc8p1o-1256763078.cos.ap-shanghai.myqcloud.com/upload/pic_floor02_title.png" mode="aspectfill" class="pyg_Vogue"></image>
-    <!-- 户外运动内容 -->
-    <view class='costume'>
-      <view class='costume_left'>
-        <image src="https://lg-igjc8p1o-1256763078.cos.ap-shanghai.myqcloud.com/upload/pic_floor02_1@2x.png" mode="aspectfill"></image>
-      </view>
-      <view class='costume_right'>
-        <image src="https://lg-igjc8p1o-1256763078.cos.ap-shanghai.myqcloud.com/upload/pic_floor02_2@2x.png" mode="aspectfill"></image>
-        <image src="https://lg-igjc8p1o-1256763078.cos.ap-shanghai.myqcloud.com/upload/pic_floor02_3@2x.png" mode="aspectfill"></image>
-        <image src="https://lg-igjc8p1o-1256763078.cos.ap-shanghai.myqcloud.com/upload/pic_floor02_4@2x.png" mode="aspectfill"></image>
-        <image src="https://lg-igjc8p1o-1256763078.cos.ap-shanghai.myqcloud.com/upload/pic_floor02_5@2x.png" mode="aspectfill"></image>
-      </view>
-    </view>
-      <!-- 箱包配饰 -->
-    <view class='divide'></view>
-      <image src="https://lg-igjc8p1o-1256763078.cos.ap-shanghai.myqcloud.com/upload/pic_floor03_title.png" mode="aspectfill" class="pyg_Vogue"></image>
-      <!-- 箱包配饰内容 -->
-    <view class='costume'>
-      <view class='costume_left'>
-        <image src="https://lg-igjc8p1o-1256763078.cos.ap-shanghai.myqcloud.com/upload/pic_floor03_1@2x.png" mode="aspectfill"></image>
-      </view>
-      <view class='costume_right'>
-        <image src="https://lg-igjc8p1o-1256763078.cos.ap-shanghai.myqcloud.com/upload/pic_floor03_2@2x.png" mode="aspectfill"></image>
-        <image src="https://lg-igjc8p1o-1256763078.cos.ap-shanghai.myqcloud.com/upload/pic_floor03_3@2x.png" mode="aspectfill"></image>
-        <image src="https://lg-igjc8p1o-1256763078.cos.ap-shanghai.myqcloud.com/upload/pic_floor03_4@2x.png" mode="aspectfill"></image>
-        <image src="https://lg-igjc8p1o-1256763078.cos.ap-shanghai.myqcloud.com/upload/pic_floor03_5@2x.png" mode="aspectfill"></image>
-      </view>
-    </view>
+    </view>   
+   </block>
   </view>
 </template>
 
@@ -83,9 +55,10 @@ export default {
       //  轮播图数据
       imgUrls: [],
       // 首页导航数据
-      navImage: []
+      navImage: [],
       // 首页楼层头部图片
-      // cate: []
+      cate: [],
+      
     };
   },
   // onLoad 在小程序页面加载的时候触发一次
@@ -98,7 +71,7 @@ export default {
       method: "GET",
       // 服务器返回数据
       success: res => {
-        // console.log(res);
+        console.log(res);
         this.imgUrls = res.data.message;
       }
     });
@@ -114,18 +87,18 @@ export default {
         this.navImage = res.data.message;
       }
     });
-    // // 请求时尚女装数据
-    // wx.request({
-    //   // 请求方式
-    //   url: "https://www.zhengzhicheng.cn/api/public/v1/home/floordata",
-    //   //  请求方式
-    //   method: "GET",
-    //   // 服务器返回数据
-    //   success: res => {
-    //     console.log(res);
-    //     this.cate = res.data.message;
-    //   }
-    // });
+    // 请求楼层数据
+    wx.request({
+      // 请求方式
+      url: "https://www.zhengzhicheng.cn/api/public/v1/home/floordata",
+      //  请求方式
+      method: "GET",
+      // 服务器返回数据
+      success: res => {
+        // console.log(res);
+        this.cate = res.data.message;
+      }
+    });
   }
 };
 </script>
