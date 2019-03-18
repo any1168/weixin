@@ -25,8 +25,7 @@
     <!-- 首页导航 -->
     <view class='pyg_nav'>
       <block v-for="(item,index) in navImage" :key="index">
-       <image :src="item.image_src" mode="aspectfill">
-       </image>
+       <image :src="item.image_src" mode="aspectfill"></image>
       </block>
     </view>
     <!-- 时尚女装 -->
@@ -44,9 +43,9 @@
         <image src="https://lg-igjc8p1o-1256763078.cos.ap-shanghai.myqcloud.com/upload/pic_floor01_5@2x.png" mode="aspectfill"></image>
       </view>
     </view>
-    <!-- 户外运动 -->
+      <!-- 户外运动 -->
     <view class='divide'></view>
-    <image src="https://lg-igjc8p1o-1256763078.cos.ap-shanghai.myqcloud.com/upload/pic_floor02_title.png" mode="aspectfill" class="pyg_Vogue"></image>
+      <image src="https://lg-igjc8p1o-1256763078.cos.ap-shanghai.myqcloud.com/upload/pic_floor02_title.png" mode="aspectfill" class="pyg_Vogue"></image>
     <!-- 户外运动内容 -->
     <view class='costume'>
       <view class='costume_left'>
@@ -59,10 +58,10 @@
         <image src="https://lg-igjc8p1o-1256763078.cos.ap-shanghai.myqcloud.com/upload/pic_floor02_5@2x.png" mode="aspectfill"></image>
       </view>
     </view>
-     <!-- 箱包配饰 -->
+      <!-- 箱包配饰 -->
     <view class='divide'></view>
-    <image src="https://lg-igjc8p1o-1256763078.cos.ap-shanghai.myqcloud.com/upload/pic_floor03_title.png" mode="aspectfill" class="pyg_Vogue"></image>
-    <!-- 箱包配饰内容 -->
+      <image src="https://lg-igjc8p1o-1256763078.cos.ap-shanghai.myqcloud.com/upload/pic_floor03_title.png" mode="aspectfill" class="pyg_Vogue"></image>
+      <!-- 箱包配饰内容 -->
     <view class='costume'>
       <view class='costume_left'>
         <image src="https://lg-igjc8p1o-1256763078.cos.ap-shanghai.myqcloud.com/upload/pic_floor03_1@2x.png" mode="aspectfill"></image>
@@ -83,7 +82,10 @@ export default {
     return {
       //  轮播图数据
       imgUrls: [],
+      // 首页导航数据
       navImage: []
+      // 首页楼层头部图片
+      // cate: []
     };
   },
   // onLoad 在小程序页面加载的时候触发一次
@@ -108,10 +110,22 @@ export default {
       method: "GET",
       // 服务器返回数据
       success: res => {
-        console.log(res);
+        // console.log(res);
         this.navImage = res.data.message;
       }
     });
+    // // 请求时尚女装数据
+    // wx.request({
+    //   // 请求方式
+    //   url: "https://www.zhengzhicheng.cn/api/public/v1/home/floordata",
+    //   //  请求方式
+    //   method: "GET",
+    //   // 服务器返回数据
+    //   success: res => {
+    //     console.log(res);
+    //     this.cate = res.data.message;
+    //   }
+    // });
   }
 };
 </script>
